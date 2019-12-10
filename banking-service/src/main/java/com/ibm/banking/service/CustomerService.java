@@ -11,29 +11,27 @@ import com.ibm.banking.model.Customer;
 import com.ibm.banking.repository.CustomerRepository;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+
 @Service
-public class CustomerService implements ICustomerService{
-	
+public class CustomerService implements ICustomerService {
+
 	@Autowired
 	CustomerRepository customerRepo;
-	
-	
-	 MongoClient mongoClient = new MongoClient();
-	 DB db = mongoClient.getDB("banking");
-	
+
+	MongoClient mongoClient = new MongoClient();
+	DB db = mongoClient.getDB("banking");
 
 	@Override
 	public boolean customerCreate(@Valid Customer customer) throws BankingApplicationException {
 		try {
-			
+
 			customerRepo.save(customer);
 			return true;
 		} catch (DataAccessException e) {
 			e.printStackTrace();
-			throw new BankingApplicationException("Can not create job now; try again after sometime",e);
+			throw new BankingApplicationException("Can not create customer now; try again after sometime", e);
 		}
 	}
-
 
 	@Override
 	public boolean updateCustomer(Customer updatedCustomer) throws BankingApplicationException {
@@ -42,8 +40,30 @@ public class CustomerService implements ICustomerService{
 			return true;
 		} catch (DataAccessException e) {
 			e.printStackTrace();
-			throw new BankingApplicationException("Job can not be updated now; try again after sometime",e);
+			throw new BankingApplicationException("Customer can not be updated now; try again after sometime", e);
 		}
+	}
+
+	@Override
+	public Customer getById(String id) throws BankingApplicationException {
+		try {
+			return customerRepo.findBycId(id);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new BankingApplicationException("Customer Not found", e);
+		}
+	}
+
+	@Override
+	public boolean delete(String id) throws BankingApplicationException {
+		try {
+			customerRepo.deleteById(id);
+			return true;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new BankingApplicationException("Deletion failed", e);
+		}
+
 	}
 
 }

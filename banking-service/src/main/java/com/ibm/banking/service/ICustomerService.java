@@ -12,6 +12,12 @@ public interface ICustomerService {
 	
 	
 	public boolean updateCustomer(Customer updatedCustomer) throws BankingApplicationException;
+
+
+	public Customer getById(String id) throws BankingApplicationException;
+
+
+	public boolean delete(String id) throws BankingApplicationException;
 	
 		
 }

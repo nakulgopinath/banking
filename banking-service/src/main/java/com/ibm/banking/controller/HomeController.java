@@ -16,37 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ibm.banking.model.Credentials;
 import com.ibm.banking.repository.CredentialsRepository;
 
-
 @RestController
 public class HomeController {
-	
+
 	@Autowired
 	BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+
 	@Autowired
 	CredentialsRepository accountCredentialsRepository;
-	
+
 	@GetMapping("/")
-	public String homePage()
-	{
+	public String homePage() {
 		return "Home";
 	}
-	
-	@PostMapping(path="/authenticate")
-	public Principal loginAccount(Principal user)
-	{
+
+	@PostMapping(path = "/authenticate")
+	public Principal loginAccount(Principal user) {
 		System.out.println("Inside Authenticate");
 		System.out.println(user.getName());
 		return user;
 	}
-	
-	
-	@PostMapping(path="/register",consumes = {MediaType.APPLICATION_JSON_VALUE})
-	public boolean registerAccount(@RequestBody @Valid Credentials account)
-	{
+
+	@PostMapping(path = "/register", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	public boolean registerAccount(@RequestBody @Valid Credentials account) {
 		account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
 		accountCredentialsRepository.save(account);
-		
 
 		return true;
 	}

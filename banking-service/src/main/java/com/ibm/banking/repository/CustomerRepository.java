@@ -7,5 +7,6 @@ import com.ibm.banking.model.Customer;
 
 
 public interface CustomerRepository extends MongoRepository<Customer, Object>{
+	Customer findBycId(String cId);
 
 }
