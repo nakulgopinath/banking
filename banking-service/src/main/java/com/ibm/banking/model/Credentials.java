@@ -1,6 +1,6 @@
 package com.ibm.banking.model;
 
-public class AccountCredentials {
+public class Credentials {
 	String userName;
 	String password;
 	public String getUserName() {
