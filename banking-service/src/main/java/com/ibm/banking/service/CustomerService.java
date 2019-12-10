@@ -3,8 +3,10 @@ package com.ibm.banking.service;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.ibm.banking.exception.BankingApplicationException;
 import com.ibm.banking.model.Customer;
 import com.ibm.banking.repository.CustomerRepository;
 import com.mongodb.DB;
@@ -21,9 +23,27 @@ public class CustomerService implements ICustomerService{
 	
 
 	@Override
-	public boolean customerCreate(@Valid Customer customer) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean customerCreate(@Valid Customer customer) throws BankingApplicationException {
+		try {
+			
+			customerRepo.save(customer);
+			return true;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new BankingApplicationException("Can not create job now; try again after sometime",e);
+		}
+	}
+
+
+	@Override
+	public boolean updateCustomer(Customer updatedCustomer) throws BankingApplicationException {
+		try {
+			customerRepo.save(updatedCustomer);
+			return true;
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new BankingApplicationException("Job can not be updated now; try again after sometime",e);
+		}
 	}
 
 }
