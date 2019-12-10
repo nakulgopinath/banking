@@ -15,6 +15,10 @@ public class Credentials {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	public String getRole() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	
 

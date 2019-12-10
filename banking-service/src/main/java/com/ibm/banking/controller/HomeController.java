@@ -32,17 +32,18 @@ public class HomeController {
 		return "Home";
 	}
 	
-	@GetMapping(path="/authenticate")
-	public Principal loginAccount(Principal account)
+	@PostMapping(path="/authenticate")
+	public Principal loginAccount(Principal user)
 	{
-		return account;
+		System.out.println("Inside Authenticate");
+		System.out.println(user.getName());
+		return user;
 	}
 	
 	
 	@PostMapping(path="/register",consumes = {MediaType.APPLICATION_JSON_VALUE})
 	public boolean registerAccount(@RequestBody @Valid Credentials account)
 	{
-		System.out.println("Inside register");
 		account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
 		accountCredentialsRepository.save(account);
 		
