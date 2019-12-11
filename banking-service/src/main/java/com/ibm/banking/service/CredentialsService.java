@@ -26,10 +26,7 @@ public class CredentialsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		System.out.println("Inside loadUserByUsername");
 		Credentials accountUser = credentialsRepository.findByUserName(username).get();
-		System.out.println(accountUser.getUserName());
-
 		return new User(accountUser.getUserName(), accountUser.getPassword(), AuthorityUtils.createAuthorityList("ROLE_" + accountUser.getRole()));
 
 	}
