@@ -1,6 +1,8 @@
 package com.ibm.banking.controller;
 
 import java.net.URI;
+import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -123,24 +125,67 @@ public class CustomerController {
 
 		return ResponseEntity.created(location).body(resMsg);
 	}
+
 	
-	@PostMapping(path ="/transactions", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	@CrossOrigin("*")
-	public ResponseEntity<ResponseMessage> createTransaction(@RequestBody @Valid Transaction transaction)
-			throws BankingApplicationException {
+	
+	//TRANSACTION MANAGEMENT
+	
+		// List All transactions of a customer
+			@GetMapping(path ="/transactions", produces = { MediaType.APPLICATION_JSON_VALUE })
+			@CrossOrigin("*")
+			public List<Transaction> getAllTransactions(@RequestParam(name = "sTid", required = false) Optional<String> sTid, 
+					@RequestParam(name = "rTid", required = false) Optional<String> rTid)
+					throws BankingApplicationException {
 
-		ResponseMessage resMsg;
+				if(sTid.isPresent()) {
+					System.out.println("sTid");
+					return transactionService.getAllBySenderAccNo(sTid);
+				}			
+				else if(rTid.isPresent()) {
+					System.out.println("rTid");
+					return transactionService.getAllByReceiverAccNo(rTid);
+				}
+				else {
+					System.out.println("111");
+					return null;
+				}
+					
 
-		transactionService.transactionCreate(transaction);
+			}
+			
+			
+			// List a transactions by transactionId
+			@GetMapping(path ="/transactions/{tId}", produces = { MediaType.APPLICATION_JSON_VALUE })
+			@CrossOrigin("*")
+			public Optional<Transaction> getTransactions(@PathVariable String tId)
+					throws BankingApplicationException {
+				System.out.println("tId");
+				
+					return transactionService.getTransaction(tId);
+				
+					
 
-		resMsg = new ResponseMessage("Success", new String("transaction created successfully."));
+			}
+			
+			//New transaction creation
+		
+		@PostMapping(path ="/transactions", consumes = { MediaType.APPLICATION_JSON_VALUE })
+		@CrossOrigin("*")
+		public ResponseEntity<ResponseMessage> createTransaction(@RequestBody @Valid Transaction transaction)
+				throws BankingApplicationException {
 
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/transactions").buildAndExpand(transaction.getTransactionId())
-				.toUri();
+			ResponseMessage resMsg;
 
-		return ResponseEntity.created(location).body(resMsg);
+			transactionService.transactionCreate(transaction);
 
-	}
+			resMsg = new ResponseMessage("Success", new String("transaction created successfully."));
+
+			URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/transactions").buildAndExpand(transaction.getTransactionId())
+					.toUri();
+
+			return ResponseEntity.created(location).body(resMsg);
+
+		}
 	
 	
 

@@ -1,5 +1,8 @@
 package com.ibm.banking.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,34 @@ public class TransactionService {
 			e.printStackTrace();
 			throw new BankingApplicationException("Transactioin failed ; try again after sometime", e);
 		}
+	}
+	
+
+	public List<Transaction> getAllBySenderAccNo(Optional<String> senderAccNo) throws BankingApplicationException {
+		try {
+		return transactionRepo.findBySenderAccNo(senderAccNo);
+	} catch (DataAccessException e) {
+		e.printStackTrace();
+		throw new BankingApplicationException("Transactioins not found ; try again after sometime", e);
+		}
+	}
+	
+	public List<Transaction> getAllByReceiverAccNo(Optional<String> receiverAccNo) throws BankingApplicationException {
+		try {
+		return transactionRepo.findByRecieverAccNo(receiverAccNo);
+	} catch (DataAccessException e) {
+		e.printStackTrace();
+		throw new BankingApplicationException("Transactioins not found ; try again after sometime", e);
+		}
+	}
+
+	public Optional<Transaction> getTransaction(String tId) throws BankingApplicationException {
+		try {
+			return transactionRepo.findById(tId);
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new BankingApplicationException("Transactioins not found ; try again after sometime", e);
+			}
 	}
 
 	
