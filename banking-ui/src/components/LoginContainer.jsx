@@ -21,6 +21,8 @@ class Login extends Component {
   }
 
   handleSuccessRedirect() {
+    const { userName } = this.state;
+    sessionStorage.setItem("user", userName);
     this.props.history.push("/customerLanding");
   }
 
@@ -42,7 +44,6 @@ class Login extends Component {
             success: true
           });
           this.handleSuccessRedirect();
-          // alert("Welcome " + response.data.name);
         }
       })
       .catch(error => {

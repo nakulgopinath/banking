@@ -6,8 +6,29 @@ class Header extends React.Component {
   constructor() {
     super();
     this.state = {
-      transaction: ""
+      transaction: "",
+      state: false
     };
+    this.handleLoginStatus = this.handleLoginStatus.bind(this);
+  }
+
+  handleLoginStatus() {
+    const session = sessionStorage.getItem("user");
+    console.log(session);
+    if (session === null) {
+      // console.log(sessionStorage.getItem);
+      return false;
+    }
+    return true;
+  }
+
+  onLogout() {
+    const session = sessionStorage.getItem("user");
+    console.log(session);
+    if (session === null) {
+      alert("No Users Logged!");
+    }
+    sessionStorage.clear();
   }
 
   render() {
@@ -49,6 +70,17 @@ class Header extends React.Component {
                 >
                   Login
                 </NavLink>
+              </li>
+            </ul>
+            <ul className="navbar-nav">
+              <li className="nav-item">
+                <button
+                  className="btn btn-success btn-sm"
+                  onClick={this.onLogout}
+                  // style={{ display: this.state.state ? "block" : "none" }}
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </div>
