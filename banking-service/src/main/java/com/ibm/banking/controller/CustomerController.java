@@ -1,4 +1,4 @@
-	package com.ibm.banking.controller;
+package com.ibm.banking.controller;
 
 import java.net.URI;
 
@@ -72,7 +72,7 @@ public class CustomerController {
 
 		resMsg = new ResponseMessage("Success", new String("Customer created successfully."));
 
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(customer.getcId())
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(customer.getAccountNo())
 				.toUri();
 
 		return ResponseEntity.created(location).body(resMsg);
@@ -86,16 +86,39 @@ public class CustomerController {
 
 		ResponseMessage resMsg;
 
-		updatedCustomer.setcId(id);
+		updatedCustomer.setAccountNo(id);
 
 		customerService.updateCustomer(updatedCustomer);
 
 		resMsg = new ResponseMessage("Success", new String("Customer updated successfully"));
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(updatedCustomer.getcId()).toUri();
+				.buildAndExpand(updatedCustomer.getAccountNo()).toUri();
 
 		return ResponseEntity.created(location).body(resMsg);
 	}
+	
+	@PutMapping(value = "/{id}/addmoney", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@CrossOrigin("*")
+	public ResponseEntity<ResponseMessage> addMoney(@PathVariable String id,
+			@RequestBody Customer customer) throws BankingApplicationException {
+
+		ResponseMessage resMsg;
+
+	//	updatedCustomer.setAccountNo(id);
+		//Customer updateCustomerAmount=customerService.getById(id);
+		double amount=customer.getBankBalance();
+				
+		customerService.updateBalance(customer,amount);
+
+		resMsg = new ResponseMessage("Success", new String("Customer balance Updated successfully"));
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+				.buildAndExpand(customer.getAccountNo()).toUri();
+
+		return ResponseEntity.created(location).body(resMsg);
+	}
+	
+	
 
 }

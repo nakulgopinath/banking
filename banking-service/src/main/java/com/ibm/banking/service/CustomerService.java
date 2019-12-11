@@ -47,7 +47,7 @@ public class CustomerService implements ICustomerService {
 	@Override
 	public Customer getById(String id) throws BankingApplicationException {
 		try {
-			return customerRepo.findBycId(id);
+			return customerRepo.findByAccountNo(id);
 		} catch (DataAccessException e) {
 			e.printStackTrace();
 			throw new BankingApplicationException("Customer Not found", e);
@@ -64,6 +64,22 @@ public class CustomerService implements ICustomerService {
 			throw new BankingApplicationException("Deletion failed", e);
 		}
 
+	}
+
+	@Override
+	public boolean updateBalance(Customer customer, double amount) throws BankingApplicationException {
+		try {
+			double OriginalAmount=customer.getBankBalance();
+			OriginalAmount+=amount;
+			customer.setBankBalance(OriginalAmount);
+			customerRepo.save(customer);
+			return true;
+			
+			
+		}catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new BankingApplicationException("Deletion failed", e);
+		}
 	}
 
 }

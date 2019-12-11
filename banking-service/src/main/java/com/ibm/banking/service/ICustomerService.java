@@ -18,6 +18,9 @@ public interface ICustomerService {
 
 
 	public boolean delete(String id) throws BankingApplicationException;
+
+
+	boolean updateBalance(Customer customer, double amount) throws BankingApplicationException;
 	
 		
 }
