@@ -22,7 +22,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.ibm.banking.exception.BankingApplicationException;
 import com.ibm.banking.model.Customer;
 import com.ibm.banking.model.ResponseMessage;
+import com.ibm.banking.model.Transaction;
 import com.ibm.banking.service.CustomerService;
+import com.ibm.banking.service.TransactionService;
 
 @RestController
 @RequestMapping("/customers")
@@ -30,6 +32,9 @@ public class CustomerController {
 
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	TransactionService transactionService;
 
 	// List All Customer GET /customers by Id
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -117,6 +122,24 @@ public class CustomerController {
 				.buildAndExpand(customer.getAccountNo()).toUri();
 
 		return ResponseEntity.created(location).body(resMsg);
+	}
+	
+	@PostMapping(path ="/transactions", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@CrossOrigin("*")
+	public ResponseEntity<ResponseMessage> createTransaction(@RequestBody @Valid Transaction transaction)
+			throws BankingApplicationException {
+
+		ResponseMessage resMsg;
+
+		transactionService.transactionCreate(transaction);
+
+		resMsg = new ResponseMessage("Success", new String("transaction created successfully."));
+
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/transactions").buildAndExpand(transaction.getTransactionId())
+				.toUri();
+
+		return ResponseEntity.created(location).body(resMsg);
+
 	}
 	
 	

@@ -10,49 +10,46 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Transaction {
 
 	@Id
-	public String TransactionId;
-	public String SenderName;
-	public String RecieverName;
-	public Date Tdate;
+	public String transactionId;
+	public String senderAccNo;
+	public String recieverAccNo;
+	public Date tDate;
 	public double amount;
 	
 	
-	public Transaction(String transactionId, String senderName, String recieverName, Date tdate, double amount) {
+	
+	public Transaction(String transactionId, String senderAccNo, String recieverAccNo, Date tDate, double amount) {
 		super();
-		TransactionId = transactionId;
-		SenderName = senderName;
-		RecieverName = recieverName;
-		Tdate = tdate;
+		this.transactionId = transactionId;
+		this.senderAccNo = senderAccNo;
+		this.recieverAccNo = recieverAccNo;
+		this.tDate = tDate;
 		this.amount = amount;
 	}
 	
-	
-	
-	
-	
 	public String getTransactionId() {
-		return TransactionId;
+		return transactionId;
 	}
 	public void setTransactionId(String transactionId) {
-		TransactionId = transactionId;
+		this.transactionId = transactionId;
 	}
-	public String getSenderName() {
-		return SenderName;
+	public String getSenderAccNo() {
+		return senderAccNo;
 	}
-	public void setSenderName(String senderName) {
-		SenderName = senderName;
+	public void setSenderAccNo(String senderAccNo) {
+		this.senderAccNo = senderAccNo;
 	}
-	public String getRecieverName() {
-		return RecieverName;
+	public String getRecieverAccNo() {
+		return recieverAccNo;
 	}
-	public void setRecieverName(String recieverName) {
-		RecieverName = recieverName;
+	public void setRecieverAccNo(String recieverAccNo) {
+		this.recieverAccNo = recieverAccNo;
 	}
-	public Date getTdate() {
-		return Tdate;
+	public Date gettDate() {
+		return tDate;
 	}
-	public void setTdate(Date tdate) {
-		Tdate = tdate;
+	public void settDate(Date tDate) {
+		this.tDate = tDate;
 	}
 	public double getAmount() {
 		return amount;
@@ -60,11 +57,16 @@ public class Transaction {
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
+
 	@Override
 	public String toString() {
-		return "Transaction [TransactionId=" + TransactionId + ", SenderName=" + SenderName + ", RecieverName="
-				+ RecieverName + ", Tdate=" + Tdate + ", amount=" + amount + "]";
+		return "Transaction [transactionId=" + transactionId + ", senderAccNo=" + senderAccNo + ", recieverAccNo="
+				+ recieverAccNo + ", tDate=" + tDate + ", amount=" + amount + "]";
 	}
+	
+	
+	
+	
 	
 	
 	
