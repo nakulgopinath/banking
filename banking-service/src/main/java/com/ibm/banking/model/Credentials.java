@@ -1,5 +1,7 @@
 package com.ibm.banking.model;
 
+import org.springframework.data.annotation.Id;
+
 public class Credentials {
 	public Credentials(String userName, String password) {
 		super();
@@ -10,6 +12,8 @@ public class Credentials {
 	public Credentials()
 	{}
 	
+	@Id
+	String _id;
 	String userName;
 	String password;
 	String securityQuestion;
@@ -25,6 +29,14 @@ public class Credentials {
 
 	public String getAnswer() {
 		return answer;
+	}
+
+	public String get_id() {
+		return _id;
+	}
+
+	public void set_id(String _id) {
+		this._id = _id;
 	}
 
 	public void setAnswer(String answer) {

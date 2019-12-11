@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,7 +47,7 @@ public class HomeController {
 	}
 
 	@PostMapping(path = "/forgotpassword", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	public boolean forgotPassword(@RequestBody @Valid Credentials account) {
+	public String forgotPassword(@RequestBody @Valid Credentials account) {
 
 		Credentials response = accountCredentialsRepository.findBySecurityQuestion(account.getSecurityQuestion());
 
@@ -55,19 +55,55 @@ public class HomeController {
 			if (response.getSecurityQuestion() != null) {
 				
 				if (account.getAnswer().equals(response.getAnswer()))
-					return true;
+					return response.getUserName();
 
 				else
-					return false;
+					return "Username Not Found";
 			}
 
 			else
-				return false;
+				return "Username Not Found";
 
 		} catch (NullPointerException e) {
-			return false;
+			return "Username Not Found";
 		}
 
 	}
+	
+	@PutMapping(path="/resetpassword",consumes= {MediaType.APPLICATION_JSON_VALUE})
+	public boolean resetPassword(@RequestBody @Valid Credentials account) {
+		
+		
+		Credentials response = accountCredentialsRepository.findByUserName(account.getUserName());
+	
+		
+		
+		try {
+			response.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+			response.set_id(response.get_id());
+			accountCredentialsRepository.save(response);
+			return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+		
+			
+		
+		
+//		catch(Exception e)
+//		{
+//			return false;
+//		}
+		
+		
+	
+			
+		
 
+	}
+	
+	
 }
+
