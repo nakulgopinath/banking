@@ -49,6 +49,7 @@ class RegisterComponent extends React.Component {
           this.setState({
             success: true
           });
+          this.handleNavigate();
         }
       })
       .catch(error => {

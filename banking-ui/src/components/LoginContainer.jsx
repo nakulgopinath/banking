@@ -10,6 +10,7 @@ class Login extends Component {
       password: "",
       newUser: false,
       isRegister: false,
+      isFirstTime: false,
       securityQuestions: [
         "What is your favourite color",
         "Who is your favourite cricketer",
@@ -21,6 +22,7 @@ class Login extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSuccessRedirect = this.handleSuccessRedirect.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
   }
 
@@ -28,12 +30,36 @@ class Login extends Component {
     this.props.history.push("/register");
   }
 
+  handleRedirect() {
+    if (this.state.newUser === false) {
+      this.props.history.push("/customerLanding");
+    } else {
+      this.props.history.push("/customerRegistration");
+    }
+  }
+
   handleSuccessRedirect() {
     const { userName } = this.state;
-    // let url =
+    let name = {
+      username: userName
+    };
+    console.log(name);
+    let url1 = "http://localhost:8080/customers/findbyusername";
+    // let newUser = false;
     sessionStorage.setItem("user", userName);
-
-    this.props.history.push("/customerLanding");
+    axios.post(url1, name).then(response => {
+      console.log(response.data);
+      if (response.data === false) {
+        this.setState({
+          newUser: true
+        });
+      } else {
+        this.setState({
+          newUser: false
+        });
+      }
+      this.handleRedirect();
+    });
   }
 
   handleSubmit(event) {

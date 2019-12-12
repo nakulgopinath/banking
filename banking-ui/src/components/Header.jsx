@@ -79,14 +79,12 @@ class Header extends React.Component {
             </ul>
             <ul className="navbar-nav">
               <li className="nav-item">
-                {this.state.state ? (
-                  <button
-                    className="btn btn-success btn-sm"
-                    onClick={this.onLogout}
-                  >
-                    Logout
-                  </button>
-                ) : null}
+                <button
+                  className="btn btn-success btn-sm"
+                  onClick={this.onLogout}
+                >
+                  Logout
+                </button>
               </li>
             </ul>
           </div>

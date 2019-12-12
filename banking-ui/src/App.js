@@ -7,6 +7,7 @@ import Login from "./components/LoginContainer";
 import Register from "./components/RegisterContainer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import CustomerLandingContainer from "./components/CustomerLandingContainer";
+import customerRegistration from "./components/CustomerRegistration";
 
 function App() {
   return (
@@ -15,6 +16,11 @@ function App() {
       <Route path="/" exact component={Landing} />
       <Route path="/login" exact component={Login} />
       <Route path="/register" exact component={Register} />
+      <Route
+        path="/customerRegistration"
+        exact
+        component={customerRegistration}
+      />
       <Route
         path="/customerLanding"
         exact

@@ -53,8 +53,9 @@ public class CustomerController {
 	}
 	
 	@PostMapping(path = "/findbyusername", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	@CrossOrigin("*")
 	boolean findByUserName(@RequestBody @Valid Customer customer)
-	{
+	{ System.out.println("Inside findByUsername");
 		Customer c=customerRepository.findByUsername(customer.getUsername());
 		try {
 			if(c.getUsername().equals(null))
@@ -94,7 +95,7 @@ public class CustomerController {
 	@CrossOrigin("*")
 	public ResponseEntity<ResponseMessage> createCustomer(@RequestBody @Valid Customer customer)
 			throws BankingApplicationException {
-
+System.out.println("Inside Customer Post");
 		ResponseMessage resMsg;
 
 		customerService.customerCreate(customer);

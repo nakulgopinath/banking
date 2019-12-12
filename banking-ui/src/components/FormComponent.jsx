@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 
 class LoginComponent extends React.Component {
   render() {
-    let inputAnswer;
+    let securityQuestionAndAnswer;
     if (this.props.credentials.isRegister === true) {
-      inputAnswer = (
+      securityQuestionAndAnswer = (
         <React.Fragment>
           <br />
           <br />
@@ -32,7 +32,7 @@ class LoginComponent extends React.Component {
         </React.Fragment>
       );
     } else {
-      inputAnswer = null;
+      securityQuestionAndAnswer = null;
     }
     return (
       <React.Fragment>
@@ -58,7 +58,7 @@ class LoginComponent extends React.Component {
                 value={this.props.credentials.password}
                 onChange={this.props.onHandleChange}
               />
-              {inputAnswer}
+              {securityQuestionAndAnswer}
               <br />
               <br />
               <button className="btn btn-primary">
