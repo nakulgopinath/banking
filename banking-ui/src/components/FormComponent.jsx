@@ -3,6 +3,37 @@ import { NavLink } from "react-router-dom";
 
 class LoginComponent extends React.Component {
   render() {
+    let inputAnswer;
+    if (this.props.credentials.isRegister === true) {
+      inputAnswer = (
+        <React.Fragment>
+          <br />
+          <br />
+          <select
+            value={this.props.credentials.securityQuestion}
+            onChange={this.props.onHandleChange}
+            name="securityQuestion"
+          >
+            {this.props.credentials.securityQuestions.map(question => (
+              <option key={question.value} value={question.value}>
+                {question.display}
+              </option>
+            ))}
+          </select>
+          <br />
+          <br />
+          <input
+            type="text"
+            name="answer"
+            placeholder="Enter Answer"
+            value={this.props.credentials.answer}
+            onChange={this.props.onHandleChange}
+          />
+        </React.Fragment>
+      );
+    } else {
+      inputAnswer = null;
+    }
     return (
       <React.Fragment>
         <div className="card text-center">
@@ -27,6 +58,7 @@ class LoginComponent extends React.Component {
                 value={this.props.credentials.password}
                 onChange={this.props.onHandleChange}
               />
+              {inputAnswer}
               <br />
               <br />
               <button className="btn btn-primary">

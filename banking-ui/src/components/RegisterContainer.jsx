@@ -8,14 +8,32 @@ class RegisterComponent extends React.Component {
     this.state = {
       userName: "",
       password: "",
+      securityQuestions: [
+        "What is your favourite color",
+        "Who is your favourite cricketer",
+        "What is the name of your childhood superhero"
+      ],
+      answer: "",
       newUser: true,
-      success: null
+      success: null,
+      isRegister: true,
+      securityQuestion: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleNavigate = this.handleNavigate.bind(this);
   }
 
+  componentDidMount() {
+    const securityQuestions = this.state.securityQuestions.map(question => {
+      return { value: question, display: question };
+    });
+    this.setState({
+      securityQuestions: [
+        { value: "", display: "(Select your security question)" }
+      ].concat(securityQuestions)
+    });
+  }
   handleNavigate() {
     this.props.history.push("/login");
   }
