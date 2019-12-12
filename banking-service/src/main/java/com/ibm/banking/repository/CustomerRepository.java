@@ -8,5 +8,6 @@ import com.ibm.banking.model.Customer;
 
 public interface CustomerRepository extends MongoRepository<Customer, Object>{
 	Customer findByAccountNo(String AccountNo);
+	Customer findByUsername(String username);
 
 }

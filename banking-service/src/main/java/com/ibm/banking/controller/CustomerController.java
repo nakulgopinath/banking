@@ -25,6 +25,7 @@ import com.ibm.banking.exception.BankingApplicationException;
 import com.ibm.banking.model.Customer;
 import com.ibm.banking.model.ResponseMessage;
 import com.ibm.banking.model.Transaction;
+import com.ibm.banking.repository.CustomerRepository;
 import com.ibm.banking.service.CustomerService;
 import com.ibm.banking.service.TransactionService;
 
@@ -37,6 +38,9 @@ public class CustomerController {
 	
 	@Autowired
 	TransactionService transactionService;
+	
+	@Autowired
+	CustomerRepository customerRepository;
 
 	// List All Customer GET /customers by Id
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
@@ -46,6 +50,24 @@ public class CustomerController {
 		System.out.println("Inside customer get controller");
 		return customerService.getById(id);
 
+	}
+	
+	@PostMapping(path = "/findbyusername", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	boolean findByUserName(@RequestBody @Valid Customer customer)
+	{
+		Customer c=customerRepository.findByUsername(customer.getUsername());
+		try {
+			if(c.getUsername().equals(null))
+				return false;
+			else
+				return true;
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+		
+		
 	}
 
 	// Delete Customer DELETE /customers by Id
