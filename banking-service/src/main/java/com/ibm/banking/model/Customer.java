@@ -1,3 +1,4 @@
+
 package com.ibm.banking.model;
 
 import java.util.ArrayList;
