@@ -16,9 +16,14 @@ class Header extends React.Component {
     const session = sessionStorage.getItem("user");
     console.log(session);
     if (session === null) {
-      // console.log(sessionStorage.getItem);
+      this.setState({
+        state: false
+      });
       return false;
     }
+    this.setState({
+      state: true
+    });
     return true;
   }
 
@@ -74,13 +79,14 @@ class Header extends React.Component {
             </ul>
             <ul className="navbar-nav">
               <li className="nav-item">
-                <button
-                  className="btn btn-success btn-sm"
-                  onClick={this.onLogout}
-                  // style={{ display: this.state.state ? "block" : "none" }}
-                >
-                  Logout
-                </button>
+                {this.state.state ? (
+                  <button
+                    className="btn btn-success btn-sm"
+                    onClick={this.onLogout}
+                  >
+                    Logout
+                  </button>
+                ) : null}
               </li>
             </ul>
           </div>

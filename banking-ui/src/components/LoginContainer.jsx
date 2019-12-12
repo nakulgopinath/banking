@@ -8,7 +8,15 @@ class Login extends Component {
     this.state = {
       userName: "",
       password: "",
-      newUser: false
+      newUser: false,
+      isRegister: false,
+      securityQuestions: [
+        "What is your favourite color",
+        "Who is your favourite cricketer",
+        "What is the name of your childhood superhero"
+      ],
+      answer: "",
+      securityQuestion: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -22,12 +30,14 @@ class Login extends Component {
 
   handleSuccessRedirect() {
     const { userName } = this.state;
+    // let url =
     sessionStorage.setItem("user", userName);
+
     this.props.history.push("/customerLanding");
   }
 
-  handleSubmit(evt) {
-    evt.preventDefault();
+  handleSubmit(event) {
+    event.preventDefault();
     let encrypt = {
       headers: {
         Authorization:
@@ -35,7 +45,7 @@ class Login extends Component {
       }
     };
     console.log(encrypt);
-    const url = "http://localhost:8080/authenticate";
+    let url = "http://localhost:8080/authenticate";
     axios
       .post(url, "", encrypt)
       .then(response => {
