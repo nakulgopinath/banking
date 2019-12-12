@@ -48,21 +48,28 @@ public class HomeController {
 
 	@PostMapping(path = "/forgotpassword", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public String forgotPassword(@RequestBody @Valid Credentials account) {
-
-		Credentials response = accountCredentialsRepository.findBySecurityQuestion(account.getSecurityQuestion());
-
+		
+		Credentials response = accountCredentialsRepository.findByUserName(account.getUserName());
 		try {
-			if (response.getSecurityQuestion() != null) {
+			
+			if(response.getUserName().equals(null))
+			{
+				return "Username Not Found";
+			}
+			
+			else if (response.getSecurityQuestion() .equals(account.getSecurityQuestion())) {
+				
 				
 				if (account.getAnswer().equals(response.getAnswer()))
 					return response.getUserName();
 
 				else
-					return "Username Not Found";
+					return "Invalid Answer";
 			}
-
+			else if(response.getSecurityQuestion() != account.getSecurityQuestion())
+				return "Invalid Security Question";
 			else
-				return "Username Not Found";
+				return response.getUserName();
 
 		} catch (NullPointerException e) {
 			return "Username Not Found";
@@ -91,11 +98,7 @@ public class HomeController {
 		
 			
 		
-		
-//		catch(Exception e)
-//		{
-//			return false;
-//		}
+	
 		
 		
 	
