@@ -9,6 +9,8 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import CustomerLandingContainer from "./components/CustomerLandingContainer";
 import customerRegistration from "./components/CustomerRegistration";
 import TransactionComponent from "./components/TransactionComponent";
+import ForgotPassword from "./components/ForgotPassword";
+import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
@@ -32,6 +34,8 @@ function App() {
         exact
         component={TransactionComponent}
       />
+      <Route path="/forgotpassword" exact component={ForgotPassword} />
+      <Route path="/resetpassword" exact component={ResetPassword} />
       <Footer />
     </Router>
   );

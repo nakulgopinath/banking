@@ -97,6 +97,14 @@ class LoginComponent extends React.Component {
                 Click here to register
               </NavLink>
             </h6>
+            <NavLink
+              className="nav-link"
+              to="/forgotpassword"
+              exact
+              activeStyle={{ color: "Green" }}
+            >
+              Forgot Password? Click here.
+            </NavLink>
           </div>
         </div>
       </React.Fragment>
