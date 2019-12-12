@@ -1,4 +1,5 @@
 import React from "react";
+import CustomerLanding from "./CustomerLanding";
 
 class CustomerLandingContainer extends React.Component {
   constructor() {
@@ -8,7 +9,7 @@ class CustomerLandingContainer extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>Hello World</h1>
+        <CustomerLanding />
       </React.Fragment>
     );
   }
