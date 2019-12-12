@@ -8,6 +8,7 @@ import Register from "./components/RegisterContainer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import CustomerLandingContainer from "./components/CustomerLandingContainer";
 import customerRegistration from "./components/CustomerRegistration";
+import TransactionComponent from "./components/TransactionComponent";
 
 function App() {
   return (
@@ -25,6 +26,11 @@ function App() {
         path="/customerLanding"
         exact
         component={CustomerLandingContainer}
+      />
+      <Route
+        path="/transactionLanding"
+        exact
+        component={TransactionComponent}
       />
       <Footer />
     </Router>
