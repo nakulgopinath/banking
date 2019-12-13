@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import com.ibm.banking.model.Customer;
 
 
-//Done by Athul KS
+//Done by Athul KS And Himanshu
 public interface CustomerRepository extends MongoRepository<Customer, Object>{
 	Customer findByAccountNo(String AccountNo);
 	Customer findByUsername(String username);

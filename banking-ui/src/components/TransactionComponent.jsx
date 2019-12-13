@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "axios";
+import TransactionHistoryComponent from "./TransactionHistoryComponent"
 
 //Done by Himanshu
 class TransactionComponent extends React.Component {
@@ -16,6 +17,7 @@ class TransactionComponent extends React.Component {
       senderAvailableBalance: "",
       recieverAccNo: "",
       amount: "",
+      transactionList:[],
 
       recieverAccNoError:"",
       amountError:""
@@ -23,6 +25,8 @@ class TransactionComponent extends React.Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    
+    this.handleTransactionHistory=this.handleTransactionHistory.bind(this);
   }
 
   componentWillReceiveProps(){
@@ -68,12 +72,41 @@ class TransactionComponent extends React.Component {
           this.setState({cNameError:""})
           error=false;
         }
+        
+   if (error === true)
+   return false;
+   else
+   return true;
 
-        if (error === true)
-      return false;
-      else
-      return true;
+      }
 
+      handleTransactionHistory(evt){
+        // evt.preventDefault();
+        console.log("inside handle transaction history handler");
+        console.log(this.state.transaction.senderAccNo);
+        const url = "http://localhost:8080/customers/transactions?sTid="+this.state.transaction.senderAccNo;
+        axios
+          .get(url)
+          .then(response => {
+            if (response.status === 200) {
+              console.log(response);
+              const accountDetails=response.data.map( item =>
+                <TransactionHistoryComponent
+                
+                res={item} key={item.transactionId}
+                
+                />
+              )
+              this.setState({
+                transactionList: accountDetails,
+              })
+            
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    
       }
 
   handleClick(evt) {
@@ -170,9 +203,13 @@ class TransactionComponent extends React.Component {
                 Transfer
               </button>
             </form>
-            <br></br>
-              <br></br>
+            {/* <br /> */}
+            <button className="btn btn-primary" onClick={this.handleTransactionHistory}>Transaction History</button>
           </div>
+            {this.state.transactionList}
+            <br />
+            <br />
+            <br />
         </div>
       </React.Fragment>
     );

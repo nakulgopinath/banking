@@ -3,7 +3,7 @@ package com.ibm.banking.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
-
+//Done By Himanshu
 @JsonInclude(Include.NON_NULL)
 public class ResponseMessage {	
 	String status;
