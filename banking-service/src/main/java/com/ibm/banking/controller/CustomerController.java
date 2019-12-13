@@ -31,6 +31,7 @@ import com.ibm.banking.service.TransactionService;
 
 @RestController
 @RequestMapping("/customers")
+@CrossOrigin("*")
 public class CustomerController {
 
 	@Autowired
@@ -44,18 +45,16 @@ public class CustomerController {
 
 	// List All Customer GET /customers by Id
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
-	@CrossOrigin("*")
 	public Customer getCustomer(@RequestParam(name = "id", required = true) String id)
 			throws BankingApplicationException {
-		System.out.println("Inside customer get controller");
+		
 		return customerService.getById(id);
 
 	}
 	
 	@PostMapping(path = "/findbyusername", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	@CrossOrigin("*")
 	boolean findByUserName(@RequestBody @Valid Customer customer)
-	{ System.out.println("Inside findByUsername");
+	{ 
 		Customer c=customerRepository.findByUsername(customer.getUsername());
 		try {
 			if(c.getUsername().equals(null))
@@ -73,7 +72,6 @@ public class CustomerController {
 
 	// Delete Customer DELETE /customers by Id
 	@DeleteMapping
-	@CrossOrigin("*")
 	public ResponseEntity<ResponseMessage> deleteCustomer(@RequestParam(name = "id", required = true) String id)
 			throws BankingApplicationException {
 
@@ -92,10 +90,9 @@ public class CustomerController {
 	}
 
 	@PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE })
-	@CrossOrigin("*")
 	public ResponseEntity<ResponseMessage> createCustomer(@RequestBody @Valid Customer customer)
 			throws BankingApplicationException {
-System.out.println("Inside Customer Post");
+
 		ResponseMessage resMsg;
 
 		customerService.customerCreate(customer);
@@ -110,7 +107,6 @@ System.out.println("Inside Customer Post");
 	}
 
 	@PutMapping(value = "/{id}", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	@CrossOrigin("*")
 	public ResponseEntity<ResponseMessage> updateCustomer(@PathVariable String id,
 			@RequestBody Customer updatedCustomer) throws BankingApplicationException {
 
@@ -129,14 +125,10 @@ System.out.println("Inside Customer Post");
 	}
 	
 	@PutMapping(value = "/{id}/addmoney", consumes = { MediaType.APPLICATION_JSON_VALUE })
-	@CrossOrigin("*")
 	public ResponseEntity<ResponseMessage> addMoney(@PathVariable String id,
 			@RequestBody Customer customer) throws BankingApplicationException {
 
 		ResponseMessage resMsg;
-
-	//	updatedCustomer.setAccountNo(id);
-		//Customer updateCustomerAmount=customerService.getById(id);
 		double amount=customer.getBankBalance();
 				
 		customerService.updateBalance(customer,amount);
@@ -155,21 +147,20 @@ System.out.println("Inside Customer Post");
 	
 		// List All transactions of a customer
 			@GetMapping(path ="/transactions", produces = { MediaType.APPLICATION_JSON_VALUE })
-			@CrossOrigin("*")
 			public List<Transaction> getAllTransactions(@RequestParam(name = "sTid", required = false) Optional<String> sTid, 
 					@RequestParam(name = "rTid", required = false) Optional<String> rTid)
 					throws BankingApplicationException {
 
 				if(sTid.isPresent()) {
-					System.out.println("sTid");
+					
 					return transactionService.getAllBySenderAccNo(sTid);
 				}			
 				else if(rTid.isPresent()) {
-					System.out.println("rTid");
+			
 					return transactionService.getAllByReceiverAccNo(rTid);
 				}
 				else {
-					System.out.println("111");
+					
 					return null;
 				}
 					
@@ -179,10 +170,9 @@ System.out.println("Inside Customer Post");
 			
 			// List a transactions by transactionId
 			@GetMapping(path ="/transactions/{tId}", produces = { MediaType.APPLICATION_JSON_VALUE })
-			@CrossOrigin("*")
 			public Optional<Transaction> getTransactions(@PathVariable String tId)
 					throws BankingApplicationException {
-				System.out.println("tId");
+				
 				
 					return transactionService.getTransaction(tId);
 				
@@ -193,7 +183,6 @@ System.out.println("Inside Customer Post");
 			//New transaction creation
 		
 		@PostMapping(path ="/transactions", consumes = { MediaType.APPLICATION_JSON_VALUE })
-		@CrossOrigin("*")
 		public ResponseEntity<ResponseMessage> createTransaction(@RequestBody @Valid Transaction transaction)
 				throws BankingApplicationException {
 
