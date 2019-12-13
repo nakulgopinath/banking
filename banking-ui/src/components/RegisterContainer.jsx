@@ -45,7 +45,7 @@ class RegisterComponent extends React.Component {
 
 
   validateForm = () => {
-
+  //Validation Done By Nakul G Nair
       let error=true;
 
       if(!this.state.userName)
