@@ -1,21 +1,20 @@
 import React from "react";
 import axios from "axios";
-// import {Route,Router} from "react-router-dom"
-import { hashHistory } from 'react-router-dom'
+import CustomerEdit from "./CustomerEdit"
 import TransactionComponent from "./TransactionComponent";
 
+//Done by Himanshu and Athul
 class CustomerLanding extends React.Component {
   constructor() {
     super();
     this.transaction=null;
     this.state = {
       loading: false,
-      userName: "athul",
-      password: "athul",
       user: {},
       dUser: {},
-      cName:"",
-      cEmail:"",
+      cName: "",
+      cEmail: "",
+      cPhone: "",
       isTransaction:true
     };
     this.handleChange = this.handleChange.bind(this);
@@ -24,24 +23,20 @@ class CustomerLanding extends React.Component {
   }
 
   componentDidMount() {
-    // let encrypt = {
-    //   headers: {
-    //     Authorization:
-    //       "Basic " + btoa(this.state.userName + ":" + this.state.password)
-    //   }
-    // };
     this.setState({ loading: true });
-    fetch("http://localhost:8080/customers?id=1234")
-      .then(response => response.json())
+    const url = "http://localhost:8080/customers/getbyusername";
+    const userData = {username:sessionStorage.getItem("user")}
+    axios
+    .post(url, userData)
       .then(data => {
         console.log(data);
         this.setState({
           loading: false,
-          user: data,
-          cName: data.cName,
-          cEmail: data.cEmail,
-          dUser: data,
-          success: false
+          user: data.data,
+          cName: data.data.cName,
+          cEmail: data.data.cEmail,
+          cPhone: data.data.cPhone,
+          dUser: data.data
         });
       });
       // console.log(this.state.user.cName);
@@ -63,26 +58,22 @@ class CustomerLanding extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    let encrypt = {
-      headers: {
-        Authorization:
-          "Basic " + btoa(this.state.userName + ":" + this.state.password)
-      }
-    };
-    console.log(this.state.user);
+    const ddUser = this.state.user;    
+    ddUser.cName=this.state.cName;
+    ddUser.cEmail=this.state.cEmail;
+    ddUser.cPhone=this.state.cPhone;
     this.state.dUser.cName = this.state.cName;
     this.state.dUser.cEmail=this.state.cEmail;
     console.log(this.state.dUser);
     const url = "http://localhost:8080/customers/" + this.state.user.accountNo;
     axios
-      .put(url, this.state.dUser)
+      .put(url, ddUser)
       .then(response => {
         if (response.status === 201) {
           console.log(response);
           this.setState({
             success: true
           });
-          this.render();
         }
       })
       .catch(error => {
@@ -112,44 +103,28 @@ class CustomerLanding extends React.Component {
       <React.Fragment>
         <div className="card text-center">
           <div className="card-header">
-            <h4>{this.props.operation}</h4>
+          <h2>Profile</h2>
           </div>
           <div className="card-body">
             <p>
               Welcome: <b>{this.state.user.cName}</b>
             </p>
-            Email: <h1>{this.state.user.cEmail}</h1>
+            <p>Email: <b>{this.state.user.cEmail}</b></p>
+            <p>Phone: <b>{this.state.user.cPhone}</b></p>
             <p>
               Balance: <b>{this.state.user.bankBalance}</b>
             </p>
-            <form className="card-text" onSubmit={this.handleSubmit}>
-              <h1>Edit Profile</h1>
-              Name{" "}
-              <input
-                type="text"
-                name="cName"
-                placeholder="Enter cName"
-                value={this.state.cName || ""}
-                onChange={this.handleChange}
-              />
-              <br />
-              <br />
-              <input
-                type="text"
-                name="cEmail"
-                placeholder="Enter Email"
-                value={this.state.cEmail || ""}
-                onChange={this.handleChange}
-              />
-              <br />
-              <br />
-              <button>Submit</button>
-            </form>
+            <hr></hr>
+            <h4>Edit profile</h4>
+            <CustomerEdit state = {this.state}
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}/>
 {/* <button
 onClick={this.fundTransferButtonHandler}>Transfer Funds</button> */}
            
           
           </div>
+          
           <TransactionComponent
         senderAccNo={this.state.user.accountNo}
         senderName={this.state.user.cName}

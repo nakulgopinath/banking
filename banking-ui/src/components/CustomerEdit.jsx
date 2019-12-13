@@ -2,12 +2,6 @@
 import React from "react"
 
 function CustomerEdit(props) {
-    // const completedStyle = {
-    //     fontStyle: "italic",
-    //     color: "#cdcdcd",
-    //     textDecoration: "line-through"
-    // }
-    
     return (
         <div className="customer-edit">
             <form className="card-text" onSubmit={props.handleSubmit}>
