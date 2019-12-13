@@ -12,7 +12,17 @@ class CustomerRegistration extends React.Component {
       cPhone: "",
       accountStartingDate: "",
       bankBalance: "",
-      transaction: null
+      transaction: null,
+
+      accountNoError: "",
+      cNameError: "",
+      usernameError: "",
+      cEmailError: "",
+      cPhoneError: "",
+      accountStartingDateError: "",
+      bankBalanceError: "",
+
+      
     };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleSubmit = this.onHandleSubmit.bind(this);
@@ -34,11 +44,93 @@ class CustomerRegistration extends React.Component {
 
   onHandleSubmit(event) {
     event.preventDefault();
+    const isValid =this.validateForm();
+
+    if(isValid===true)
+    {
+
     const url = "http://localhost:8080/customers";
     axios.post(url, this.state).then(response => {
       if (response.status === 201) { this.props.history.push("/customerLanding") }
     });
   }
+}
+
+  validateForm = () => {
+    //Validation Done By Nakul G Nair
+        let error=true;
+
+        
+  
+        if(!this.state.accountNo)
+        {
+          this.setState({accountNoError:"Account No is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cNameError:""})
+          error=false;
+        }
+
+        if(!this.state.cName)
+        {
+          this.setState({cNameError:"Customer Name is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cNameError:""})
+          error=false;
+        }
+
+        if(!this.state.cEmail)
+        {
+          this.setState({cEmailError:"E-mail ID is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cEmailError:""})
+          error=false;
+        }
+
+
+
+        if(!this.state.cPhone)
+        {
+          this.setState({cPhoneError:"Phone No is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cPhoneError:""})
+          error=false;
+        }
+
+        if(!this.state.accountStartingDate)
+        {
+          this.setState({accountStartingDateError:"Account Starting Date is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({accountStartingDateError:""})
+          error=false;
+        }
+
+        if(!this.state.bankBalance)
+        {
+          this.setState({bankBalanceError:"Bank Balance  is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({bankBalanceError:""})
+          error=false;
+        }
+  
+    }
 
   render() {
     return (
@@ -56,6 +148,9 @@ class CustomerRegistration extends React.Component {
                 value={this.state.accountNo}
                 onChange={this.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.accountNoError}
+              </div>
               <br />
               <br />
               <input
@@ -65,6 +160,9 @@ class CustomerRegistration extends React.Component {
                 value={this.state.cName}
                 onChange={this.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.cNameError}
+              </div>
               <br />
               <br />
               <input
@@ -74,6 +172,9 @@ class CustomerRegistration extends React.Component {
                 value={this.state.cEmail}
                 onChange={this.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.cEmailError}
+              </div>
               <br />
               <br />
               <input
@@ -83,6 +184,9 @@ class CustomerRegistration extends React.Component {
                 value={this.state.cPhone}
                 onChange={this.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.cPhoneError}
+              </div>
               <br />
               <br />
               <input
@@ -92,6 +196,9 @@ class CustomerRegistration extends React.Component {
                 value={this.state.accountStartingDate}
                 onChange={this.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.accountNoError}
+              </div>
               <br />
               <br />
               <input
@@ -101,6 +208,9 @@ class CustomerRegistration extends React.Component {
                 value={this.state.bankBalance}
                 onChange={this.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.bankBalanceError}
+              </div>
               <br />
               <br />
               <button className="btn btn-primary">Submit</button>
@@ -116,3 +226,4 @@ class CustomerRegistration extends React.Component {
 }
 
 export default CustomerRegistration;
+
