@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import FormComponent from "./FormComponent";
-
+//Done by Hari Govind
 class Login extends Component {
   constructor() {
     super();
@@ -18,8 +18,8 @@ class Login extends Component {
       ],
       answer: "",
       securityQuestion: "",
-      userNameError:"",
-      passwordError:""
+      userNameError: "",
+      passwordError: ""
 
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -67,44 +67,40 @@ class Login extends Component {
 
   validateForm = () => {
     //Validation Done By Nakul G Nair
-        let error=true;
-  
-        if(!this.state.userName)
-        {
-          this.setState({userNameError:"Username is required"})
-          error=true;
-        }
-        else
-        {
-          this.setState({userNameError:""})
-          error=false;
-        }
-  
-        if(!this.state.password)
-        {
-          this.setState({passwordError:"Password is required"})
-          error=true;
-        }
-        else
-        {
-          this.setState({passwordError:""})
-          error=false;
-        }
-  
-       
-  
-        if(error===true)
-        return false;
-        else
-        return true;
-  
-      
+    let error = true;
+
+    if (!this.state.userName) {
+      this.setState({ userNameError: "Username is required" })
+      error = true;
     }
+    else {
+      this.setState({ userNameError: "" })
+      error = false;
+    }
+
+    if (!this.state.password) {
+      this.setState({ passwordError: "Password is required" })
+      error = true;
+    }
+    else {
+      this.setState({ passwordError: "" })
+      error = false;
+    }
+
+
+
+    if (error === true)
+      return false;
+    else
+      return true;
+
+
+  }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    const isValid =this.validateForm();
+    const isValid = this.validateForm();
 
     let encrypt = {
       headers: {
@@ -112,26 +108,25 @@ class Login extends Component {
           "Basic " + btoa(this.state.userName + ":" + this.state.password)
       }
     };
-    
 
-    if(isValid===true)
-    {
-    let url = "http://localhost:8080/authenticate";
-    axios
-      .post(url, "", encrypt)
-      .then(response => {
-        if (response.status === 200) {
-          this.setState({
-            success: true
-          });
-          this.handleSuccessRedirect();
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+
+    if (isValid === true) {
+      let url = "http://localhost:8080/authenticate";
+      axios
+        .post(url, "", encrypt)
+        .then(response => {
+          if (response.status === 200) {
+            this.setState({
+              success: true
+            });
+            this.handleSuccessRedirect();
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
-}
+  }
 
   handleChange(event) {
     const { name, value } = event.target;

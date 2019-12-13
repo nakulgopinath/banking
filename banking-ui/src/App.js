@@ -11,11 +11,11 @@ import customerRegistration from "./components/CustomerRegistration";
 import TransactionComponent from "./components/TransactionComponent";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
-
+//Done by Hari Govind
 function App() {
   return (
     <Router >
-      <Header cName="Hari" />
+      <Header />
       <Route path="/" exact component={Landing} />
       <Route path="/login" exact component={Login} />
       <Route path="/register" exact component={Register} />

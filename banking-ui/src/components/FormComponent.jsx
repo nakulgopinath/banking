@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-
+//Done by Hari Govind
 class LoginComponent extends React.Component {
   render() {
     let securityQuestionAndAnswer;
@@ -21,8 +21,8 @@ class LoginComponent extends React.Component {
             ))}
           </select>
           <div style={{ fontSize: 12, color: "red" }}>
-                 {this.props.credentials.securityQuestionsError}
-              </div>
+            {this.props.credentials.securityQuestionsError}
+          </div>
           <br />
           <br />
           <input
@@ -33,8 +33,8 @@ class LoginComponent extends React.Component {
             onChange={this.props.onHandleChange}
           />
           <div style={{ fontSize: 12, color: "red" }}>
-                 {this.props.credentials.answerError}
-              </div>
+            {this.props.credentials.answerError}
+          </div>
         </React.Fragment>
       );
     } else {
@@ -56,7 +56,7 @@ class LoginComponent extends React.Component {
                 onChange={this.props.onHandleChange}
               />
               <div style={{ fontSize: 12, color: "red" }}>
-                 {this.props.credentials.userNameError}
+                {this.props.credentials.userNameError}
               </div>
               <br />
               <br />
@@ -68,7 +68,7 @@ class LoginComponent extends React.Component {
                 onChange={this.props.onHandleChange}
               />
               <div style={{ fontSize: 12, color: "red" }}>
-                 {this.props.credentials.passwordError}
+                {this.props.credentials.passwordError}
               </div>
 
               {securityQuestionAndAnswer}
