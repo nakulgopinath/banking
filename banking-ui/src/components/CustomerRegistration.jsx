@@ -1,5 +1,4 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import axios from "axios";
 
 class CustomerRegistration extends React.Component {
@@ -37,7 +36,7 @@ class CustomerRegistration extends React.Component {
     event.preventDefault();
     const url = "http://localhost:8080/customers";
     axios.post(url, this.state).then(response => {
-      console.log(response);
+      if (response.status === 201) { this.props.history.push("/customerLanding") }
     });
   }
 

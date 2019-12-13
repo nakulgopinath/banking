@@ -10,6 +10,7 @@ class Header extends React.Component {
       state: false
     };
     this.handleLoginStatus = this.handleLoginStatus.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
   handleLoginStatus() {
@@ -27,16 +28,55 @@ class Header extends React.Component {
     return true;
   }
 
+  handleNavigate = () => {
+    this.props.history.push("/login");
+  };
+
   onLogout() {
+    sessionStorage.clear();
     const session = sessionStorage.getItem("user");
     console.log(session);
     if (session === null) {
-      alert("No Users Logged!");
+      alert("Logged Out!");
+      // this.handleNavigate();
+      // this.props.history.push("/login");
     }
-    sessionStorage.clear();
   }
 
   render() {
+    let loginLogOutButton;
+    console.log(sessionStorage.getItem("user") != null);
+    if (sessionStorage.getItem("user") != null) {
+      loginLogOutButton = (
+        <React.Fragment>
+          <ul className="navbar-nav">
+            <li className="nav-item">
+              <button
+                className="btn btn-success btn-sm"
+                onClick={this.onLogout}
+              >
+                Logout
+              </button>
+            </li>
+          </ul>
+        </React.Fragment>
+      );
+    } else if (sessionStorage.getItem("user") === null) {
+      loginLogOutButton = (
+        <React.Fragment>
+          <li className="nav-item">
+            <NavLink
+              className="nav-link"
+              to="/login"
+              exact
+              activeStyle={{ color: "Green" }}
+            >
+              Login
+            </NavLink>
+          </li>
+        </React.Fragment>
+      );
+    }
     return (
       <React.Fragment>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -66,26 +106,7 @@ class Header extends React.Component {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/login"
-                  exact
-                  activeStyle={{ color: "Green" }}
-                >
-                  Login
-                </NavLink>
-              </li>
-            </ul>
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <button
-                  className="btn btn-success btn-sm"
-                  onClick={this.onLogout}
-                >
-                  Logout
-                </button>
-              </li>
+              {loginLogOutButton}
             </ul>
           </div>
         </nav>

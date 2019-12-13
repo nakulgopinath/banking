@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import ResetPassword from "./ResetPassword";
+import { Redirect } from "react-router-dom";
 class ForgotPassword extends React.Component {
   constructor() {
     super();
@@ -15,7 +16,6 @@ class ForgotPassword extends React.Component {
     };
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleSubmit = this.onHandleSubmit.bind(this);
-    // this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   componentDidMount() {
@@ -41,16 +41,16 @@ class ForgotPassword extends React.Component {
     const url = "http://localhost:8080/forgotpassword";
     axios.post(url, this.state).then(response => {
       console.log(response);
-      //   if (response.data === this.state.userName) {
-
-      //     // return <ResetPassword username={this.state.userName} />;
-      //   }
+      if (response.data === this.state.userName) {
+        this.handleRedirect();
+        //   return <ResetPassword username={this.state.userName} />;
+      }
     });
   };
 
-  //   handleRedirect() {
-  //     this.props.history.push("/resetpassword/"+this.state);
-  //   }
+  handleRedirect() {
+    this.props.history.push({ pathname: "/resetpassword/", state: this.state });
+  }
 
   render() {
     return (
