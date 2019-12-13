@@ -42,7 +42,8 @@ public class CustomerController {
 	
 	@Autowired
 	CustomerRepository customerRepository;
-
+	
+	//Done by Athul KS
 	// List All Customer GET /customers by Id
 	@GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE })
 	public Customer getCustomer(@RequestParam(name = "id", required = true) String id)
@@ -50,6 +51,23 @@ public class CustomerController {
 		
 		return customerService.getById(id);
 
+	}
+	//Done by Athul KS
+	@PostMapping(path = "/getbyusername", consumes = { MediaType.APPLICATION_JSON_VALUE })
+	Customer getByUserName(@RequestBody @Valid Customer customer)
+	{ 
+		
+		try {
+			
+				return customerRepository.findByUsername(customer.getUsername());
+			
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+		
+		
 	}
 	
 	
@@ -73,7 +91,8 @@ public class CustomerController {
 		
 		
 	}
-
+	
+	//Done by Athul KS
 	// Delete Customer DELETE /customers by Id
 	@DeleteMapping
 	public ResponseEntity<ResponseMessage> deleteCustomer(@RequestParam(name = "id", required = true) String id)
@@ -152,8 +171,9 @@ public class CustomerController {
 	}
 
 	
+//Done by Athul KS	
+//TRANSACTION MANAGEMENT
 	
-	//TRANSACTION MANAGEMENT
 	
 		// List All transactions of a customer
 			@GetMapping(path ="/transactions", produces = { MediaType.APPLICATION_JSON_VALUE })
