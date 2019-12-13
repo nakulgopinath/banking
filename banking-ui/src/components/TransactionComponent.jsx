@@ -6,22 +6,31 @@ class TransactionComponent extends React.Component {
     super();
     this.state = {
       transaction: {
-        senderAccNo: "4567",
+        senderAccNo: "",
         recieverAccNo: "",
         amount: ""
       },
       success: false,
-      senderName: "himanshu",
-      senderAvailableBalance: "34567890",
-      recieverAccNo: "12345",
-      amount: "2000"
+      senderName: "",
+      senderAvailableBalance: "",
+      recieverAccNo: "",
+      amount: ""
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentWillReceiveProps(){
+    //   if(this.props===null)
+    //   {return this.props.onHandleTransaction}
+    console.log(this.props)
+  }
+
   handleChange(event) {
+    this.state.transaction.senderAccNo = this.props.senderAccNo;
+    this.state.senderName = this.props.senderName;
+    this.state.senderAvailableBalance = this.props.senderAvailableBalance;
     const { name, value } = event.target;
     this.setState({
       [name]: value
@@ -70,6 +79,7 @@ class TransactionComponent extends React.Component {
               type="text"
               disabled
               value={this.state.senderName}
+              placeholder={this.state.senderName}
               name="senderName"
             ></input>
             <br></br>

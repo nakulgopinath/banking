@@ -1,18 +1,26 @@
 import React from "react";
 import axios from "axios";
+// import {Route,Router} from "react-router-dom"
+import { hashHistory } from 'react-router-dom'
+import TransactionComponent from "./TransactionComponent";
 
 class CustomerLanding extends React.Component {
   constructor() {
     super();
+    this.transaction=null;
     this.state = {
       loading: false,
       userName: "athul",
       password: "athul",
       user: {},
-      dUser: {}
+      dUser: {},
+      cName:"",
+      cEmail:"",
+      isTransaction:true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    // this.fundTransferButtonHandler = this.fundTransferButtonHandler.bind(this);
   }
 
   componentDidMount() {
@@ -23,17 +31,24 @@ class CustomerLanding extends React.Component {
     //   }
     // };
     this.setState({ loading: true });
-    fetch("http://localhost:8080/customers?id=4567")
+    fetch("http://localhost:8080/customers?id=1234")
       .then(response => response.json())
       .then(data => {
+        console.log(data);
         this.setState({
           loading: false,
           user: data,
           cName: data.cName,
+          cEmail: data.cEmail,
           dUser: data,
           success: false
         });
       });
+      // console.log(this.state.user.cName);
+  }
+
+  handleTransaction(){
+    this.setState({isTransaction:true})
   }
 
   handleChange(event) {
@@ -56,6 +71,7 @@ class CustomerLanding extends React.Component {
     };
     console.log(this.state.user);
     this.state.dUser.cName = this.state.cName;
+    this.state.dUser.cEmail=this.state.cEmail;
     console.log(this.state.dUser);
     const url = "http://localhost:8080/customers/" + this.state.user.accountNo;
     axios
@@ -74,6 +90,23 @@ class CustomerLanding extends React.Component {
       });
   }
 
+  // fundTransferButtonHandler = () =>{
+  //   // this.context.history.push("/");
+  //   // this.props.history.push({pathname:"/transactionLanding"})
+  //   // state:{senderAccNo:this.state.user.accountNo,
+  //   //   senderName:this.state.user.cName,
+  //   //   senderAvailableBalance:this.state.user.bankBalance}});
+  //   console.log("Entered button Handler");
+  //   console.log(this.state.user);
+  //   if(this.state.isTransaction===true){
+  //     console.log("True")
+  //   this.transaction = 
+  //   } 
+  //   else{
+  //     this.transaction=null
+  //   }
+
+  // }
   render() {
     return (
       <React.Fragment>
@@ -101,19 +134,32 @@ class CustomerLanding extends React.Component {
               />
               <br />
               <br />
-              {/* <input
+              <input
                 type="text"
                 name="cEmail"
                 placeholder="Enter Email"
-                value={this.state.dUser.cEmail}
-                onChange={this.onHandleChange}
+                value={this.state.cEmail || ""}
+                onChange={this.handleChange}
               />
               <br />
-              <br /> */}
+              <br />
               <button>Submit</button>
             </form>
+{/* <button
+onClick={this.fundTransferButtonHandler}>Transfer Funds</button> */}
+           
+          
           </div>
+          <TransactionComponent
+        senderAccNo={this.state.user.accountNo}
+        senderName={this.state.user.cName}
+        senderAvailableBalance={this.state.user.bankBalance}
+        onHandleTransaction={this.handleTransaction}
+        ></TransactionComponent>
         </div>
+        {this.transaction}
+            {console.log("Hoiiii")}
+            {console.log(this.transaction)}
       </React.Fragment>
     );
   }

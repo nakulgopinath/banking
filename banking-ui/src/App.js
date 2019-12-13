@@ -14,7 +14,7 @@ import ResetPassword from "./components/ResetPassword";
 
 function App() {
   return (
-    <Router>
+    <Router >
       <Header cName="Hari" />
       <Route path="/" exact component={Landing} />
       <Route path="/login" exact component={Login} />
@@ -25,14 +25,14 @@ function App() {
         component={customerRegistration}
       />
       <Route
-        path="/customerLanding"
-        exact
-        component={CustomerLandingContainer}
-      />
-      <Route
         path="/transactionLanding"
         exact
         component={TransactionComponent}
+      />
+      <Route
+        path="/customerLanding"
+        exact
+        component={CustomerLandingContainer}
       />
       <Route path="/forgotpassword" exact component={ForgotPassword} />
       <Route path="/resetpassword" exact component={ResetPassword} />
