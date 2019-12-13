@@ -17,7 +17,10 @@ class Login extends Component {
         "What is the name of your childhood superhero"
       ],
       answer: "",
-      securityQuestion: ""
+      securityQuestion: "",
+      userNameError:"",
+      passwordError:""
+
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -62,15 +65,57 @@ class Login extends Component {
     });
   }
 
+  validateForm = () => {
+    //Validation Done By Nakul G Nair
+        let error=true;
+  
+        if(!this.state.userName)
+        {
+          this.setState({userNameError:"Username is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({userNameError:""})
+          error=false;
+        }
+  
+        if(!this.state.password)
+        {
+          this.setState({passwordError:"Password is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({passwordError:""})
+          error=false;
+        }
+  
+       
+  
+        if(error===true)
+        return false;
+        else
+        return true;
+  
+      
+    }
+
   handleSubmit(event) {
     event.preventDefault();
+
+    const isValid =this.validateForm();
+
     let encrypt = {
       headers: {
         Authorization:
           "Basic " + btoa(this.state.userName + ":" + this.state.password)
       }
     };
-    console.log(encrypt);
+    
+
+    if(isValid===true)
+    {
     let url = "http://localhost:8080/authenticate";
     axios
       .post(url, "", encrypt)
@@ -85,7 +130,8 @@ class Login extends Component {
       .catch(error => {
         console.log(error);
       });
-  }
+    }
+}
 
   handleChange(event) {
     const { name, value } = event.target;
