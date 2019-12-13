@@ -13,6 +13,10 @@ import com.ibm.banking.exception.BankingApplicationException;
 import com.ibm.banking.model.Customer;
 import com.ibm.banking.model.Transaction;
 import com.ibm.banking.repository.TransactionRepository;
+import com.ibm.banking.service.SequenceGeneratorService;
+
+import com.mongodb.DB;
+import com.mongodb.MongoClient;
 
 
 //Done by Athul KS
@@ -24,10 +28,16 @@ public class TransactionService {
 	
 	@Autowired
 	CustomerService customerService;
+	
+	@Autowired
+	SequenceGeneratorService sequenceGeneratorService;
+	
+	MongoClient mongoClient = new MongoClient();
+	 DB db = mongoClient.getDB("test");
 
 	public boolean transactionCreate(@Valid Transaction transaction) throws BankingApplicationException {
 		try {
-
+			transaction.setTransactionId(Integer.toString((Integer.parseInt(sequenceGeneratorService.generateSequence(db,transaction.SEQUENCE_NAME))+10000)));
 			transactionRepo.save(transaction);
 			Customer sender = customerService.getById(transaction.senderAccNo);
 			Customer receiver = customerService.getById(transaction.recieverAccNo);
