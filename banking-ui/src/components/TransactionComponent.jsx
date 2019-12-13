@@ -15,7 +15,10 @@ class TransactionComponent extends React.Component {
       senderName: "",
       senderAvailableBalance: "",
       recieverAccNo: "",
-      amount: ""
+      amount: "",
+
+      recieverAccNoError:"",
+      amountError:""
     };
 
     this.handleClick = this.handleClick.bind(this);
@@ -38,8 +41,44 @@ class TransactionComponent extends React.Component {
     });
   }
 
+  validateForm = () => {
+    //Validation Done By Nakul G Nair
+        let error=true;
+
+        
+  
+        if(!this.state.recieverAccNo)
+        {
+          this.setState({recieverAccNoError:"Reciever Account No  is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cNameError:""})
+          error=false;
+        }
+
+        if(!this.state.amount)
+        {
+          this.setState({amountError:"Reciever Account No  is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cNameError:""})
+          error=false;
+        }
+
+      }
+
   handleClick(evt) {
     evt.preventDefault();
+
+    const isValid =this.validateForm();
+
+    if(isValid===true)
+    {
+
     console.log("inside handle click");
     this.state.transaction.recieverAccNo = this.state.recieverAccNo;
     this.state.transaction.amount = this.state.amount;
@@ -59,6 +98,7 @@ class TransactionComponent extends React.Component {
         console.log(error);
       });
   }
+}
 
   render() {
     return (
@@ -103,6 +143,9 @@ class TransactionComponent extends React.Component {
                 value={this.state.recieverAccNo}
                 onChange={this.handleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.recieverAccNoError}
+              </div>
 
               <h4>Amount</h4>
               <input
@@ -111,7 +154,10 @@ class TransactionComponent extends React.Component {
                 placeholder="Enter Amount to be sent"
                 value={this.state.amount}
                 onChange={this.handleChange}
-              ></input>
+              />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.state.amountError}
+              </div>
               <br></br>
               <br></br>
               {/* <br></br> */}

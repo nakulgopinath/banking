@@ -15,7 +15,11 @@ class CustomerLanding extends React.Component {
       cName: "",
       cEmail: "",
       cPhone: "",
-      isTransaction:true
+      isTransaction:true,
+
+      cNameError:"",
+      cEmailError:"",
+      cPhoneError:"",
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -56,15 +60,84 @@ class CustomerLanding extends React.Component {
     });
   }
 
+  validateForm = () => {
+    //Validation Done By Nakul G Nair
+        let error=true;
+
+        
+  
+        if(!this.state.cName)
+        {
+          this.setState({cNameError:"Customer name is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cNameError:""})
+          error=false;
+        }
+  
+        if(!this.state.cEmail)
+        {
+          this.setState({cEmailError:"Email is required"})
+          error=true;
+        }
+        else
+        {
+          this.setState({cEmailError:""})
+          error=false;
+        }
+
+        if(!this.state.cPhone)
+        {
+          this.setState({cPhoneError:"Phone No is required"})
+          error=true;
+
+
+        }
+        else
+        {
+          
+          if(this.state.cPhone.length<10)
+          {
+            this.setState({cPhoneError:"Phone No Must be 10 Digits"})
+            error=true;
+          }
+          else
+          {
+            this.setState({cPhoneError:""})
+            error=false;
+          }
+          
+        }
+
+        
+  
+       
+  
+        if(error===true)
+        return false;
+        else
+        return true;
+  
+      
+    }
+
   handleSubmit(event) {
     event.preventDefault();
+    const isValid =this.validateForm();
+    console.log(isValid)
+
     const ddUser = this.state.user;    
     ddUser.cName=this.state.cName;
     ddUser.cEmail=this.state.cEmail;
     ddUser.cPhone=this.state.cPhone;
     this.state.dUser.cName = this.state.cName;
     this.state.dUser.cEmail=this.state.cEmail;
-    console.log(this.state.dUser);
+    
+
+    if(isValid==true)
+    {
     const url = "http://localhost:8080/customers/" + this.state.user.accountNo;
     axios
       .put(url, ddUser)
@@ -80,6 +153,7 @@ class CustomerLanding extends React.Component {
         console.log(error);
       });
   }
+}
 
   // fundTransferButtonHandler = () =>{
   //   // this.context.history.push("/");
