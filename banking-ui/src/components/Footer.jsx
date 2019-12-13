@@ -9,13 +9,16 @@ class Footer extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <footer className="footer mt-auto py-3">
+        {/* <footer className="footer mt-auto py-3">
           <div className="container">
             <span className="text-muted">
               Place sticky footer content here.
             </span>
           </div>
-        </footer>
+        </footer> */}
+        <div id="footer">
+          SBI Banking 2019 &copy;
+</div>
       </React.Fragment>
     );
   }

@@ -1,4 +1,4 @@
-body {
+/* body {
     background: linear-gradient(253deg, #0cc898, #1797d2, #864fe1);
     background-size: 300% 300%;
     -webkit-animation: Background 25s ease infinite;
@@ -40,7 +40,7 @@ body {
     100% {
       background-position: 0% 50%
     }
-  }
+  } */
   
   .full-screen {
     /* position: fixed; */
@@ -64,7 +64,7 @@ body {
     justify-content: center;
     text-align: center;
   }
-  
+/*   
   h1 {
     color: #fff;
     font-family: 'Open Sans', sans-serif;
@@ -94,4 +94,16 @@ body {
   
   .button-line:hover {
     opacity: 1;
+  } */
+
+  #footer{
+    background-color: #212121;
+    height: 60px;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    line-height: 50px;
+    color: #aaa;
+    text-align: center;
+    width: 100%;
   }
