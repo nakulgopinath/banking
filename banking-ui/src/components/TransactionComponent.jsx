@@ -69,6 +69,11 @@ class TransactionComponent extends React.Component {
           error=false;
         }
 
+        if (error === true)
+      return false;
+      else
+      return true;
+
       }
 
   handleClick(evt) {
@@ -165,6 +170,8 @@ class TransactionComponent extends React.Component {
                 Transfer
               </button>
             </form>
+            <br></br>
+              <br></br>
           </div>
         </div>
       </React.Fragment>

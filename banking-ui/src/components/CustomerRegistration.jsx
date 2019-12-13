@@ -45,6 +45,7 @@ class CustomerRegistration extends React.Component {
   onHandleSubmit(event) {
     event.preventDefault();
     const isValid =this.validateForm();
+    console.log(isValid)
 
     if(isValid===true)
     {
@@ -129,6 +130,12 @@ class CustomerRegistration extends React.Component {
           this.setState({bankBalanceError:""})
           error=false;
         }
+
+
+        if (error === true)
+      return false;
+         else
+      return true;
   
     }
 
@@ -197,7 +204,7 @@ class CustomerRegistration extends React.Component {
                 onChange={this.onHandleChange}
               />
               <div style={{ fontSize: 12, color: "red" }}>
-                 {this.state.accountNoError}
+                 {this.state.accountStartingDateError}
               </div>
               <br />
               <br />
