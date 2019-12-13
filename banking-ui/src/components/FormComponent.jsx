@@ -20,6 +20,9 @@ class LoginComponent extends React.Component {
               </option>
             ))}
           </select>
+          <div style={{ fontSize: 12, color: "red" }}>
+                 {this.props.credentials.securityQuestionsError}
+              </div>
           <br />
           <br />
           <input
@@ -29,6 +32,9 @@ class LoginComponent extends React.Component {
             value={this.props.credentials.answer}
             onChange={this.props.onHandleChange}
           />
+          <div style={{ fontSize: 12, color: "red" }}>
+                 {this.props.credentials.answerError}
+              </div>
         </React.Fragment>
       );
     } else {
@@ -49,6 +55,9 @@ class LoginComponent extends React.Component {
                 value={this.props.credentials.userName}
                 onChange={this.props.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.props.credentials.userNameError}
+              </div>
               <br />
               <br />
               <input
@@ -58,6 +67,10 @@ class LoginComponent extends React.Component {
                 value={this.props.credentials.password}
                 onChange={this.props.onHandleChange}
               />
+              <div style={{ fontSize: 12, color: "red" }}>
+                 {this.props.credentials.passwordError}
+              </div>
+
               {securityQuestionAndAnswer}
               <br />
               <br />

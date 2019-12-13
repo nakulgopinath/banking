@@ -17,7 +17,12 @@ class RegisterComponent extends React.Component {
       newUser: true,
       success: null,
       isRegister: true,
-      securityQuestion: ""
+      securityQuestion: "",
+
+      userNameError:"",
+      passwordError:"",
+      securityQuestionsError:"",
+      answerError:""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -38,23 +43,90 @@ class RegisterComponent extends React.Component {
     this.props.history.push("/login");
   }
 
+
+  validateForm = () => {
+
+      let error=true;
+
+      if(!this.state.userName)
+      {
+        this.setState({userNameError:"Username is required"})
+        error=true;
+      }
+      else
+      {
+        this.setState({userNameError:""})
+        error=false;
+      }
+
+      if(!this.state.password)
+      {
+        this.setState({passwordError:"Password is required"})
+        error=true;
+      }
+      else
+      {
+        this.setState({passwordError:""})
+        error=false;
+      }
+
+      if(!this.state.securityQuestion)
+      {
+        this.setState({securityQuestionsError:"Security Question is required"})
+        error=true;
+      }
+      else
+      {
+        this.setState({securityQuestionsError:""})
+        error=false;
+      }
+      if(!this.state.answer)
+      {
+        this.setState({answerError:"Answer is required"})
+        error=true;
+      }
+      else
+      {
+        this.setState({answerError:""})
+        error=false;
+      }
+
+      if(error===true)
+      return false;
+      else
+      return true;
+
+    
+  }
+
   handleSubmit(evt) {
     evt.preventDefault();
+
+    const isValid =this.validateForm();
+    console.log(isValid)
+
+    if(isValid===true)
+    {
     const url = "http://localhost:8080/register";
     axios
       .post(url, this.state)
       .then(response => {
         console.log(response);
-        if (response.status === 200) {
+        if (response.data === true) {
           this.setState({
             success: true
           });
+          alert("Registration Success");
           this.handleNavigate();
+        }
+        else if(response.data !== true){
+          alert("Username Already Exists")
         }
       })
       .catch(error => {
         console.log(error);
       });
+      }
   }
 
   handleChange(event) {
