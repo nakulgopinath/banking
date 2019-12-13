@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+//Done By Nakul G Nair
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -38,7 +39,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/customers/**").permitAll()
 			.antMatchers("/forgotpassword").permitAll()
 			.antMatchers("/resetpassword").permitAll()
-//			.antMatchers("/transactions").permitAll()
 			.anyRequest().authenticated()
 			.and().httpBasic()
 			.and().formLogin();

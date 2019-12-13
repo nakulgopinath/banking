@@ -1,8 +1,27 @@
 package com.ibm.banking.model;
 
-import org.springframework.data.annotation.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+
+//Done by Nakul G Nair
+
+@Document("credentials")
+@XmlRootElement
 public class Credentials {
+	
+	@Id
+	String _id;
+	@Indexed(unique=true)
+	String userName;
+	String password;
+	String securityQuestion;
+	String answer;
+	
+	
 	public Credentials(String userName, String password) {
 		super();
 		this.userName = userName;
@@ -12,12 +31,7 @@ public class Credentials {
 	public Credentials()
 	{}
 	
-	@Id
-	String _id;
-	String userName;
-	String password;
-	String securityQuestion;
-	String answer;
+	
 	
 	public String getSecurityQuestion() {
 		return securityQuestion;
@@ -56,7 +70,6 @@ public class Credentials {
 		this.password = password;
 	}
 	public String getRole() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

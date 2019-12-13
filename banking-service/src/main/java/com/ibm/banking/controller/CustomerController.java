@@ -52,6 +52,10 @@ public class CustomerController {
 
 	}
 	
+	
+//	To check if the user exists or not
+//  Done By Nakul G Nair
+	
 	@PostMapping(path = "/findbyusername", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	boolean findByUserName(@RequestBody @Valid Customer customer)
 	{ 

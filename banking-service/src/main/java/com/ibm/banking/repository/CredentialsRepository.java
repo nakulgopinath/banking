@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.ibm.banking.model.Credentials;
 
+//Done by Nakul G Nair
 public interface CredentialsRepository extends MongoRepository<Credentials, Object> {
 	Credentials findByUserName(String userName);
 	Credentials findBySecurityQuestion(String securityQuestion) throws UsernameNotFoundException;

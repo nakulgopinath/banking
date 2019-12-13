@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ibm.banking.model.Credentials;
 import com.ibm.banking.repository.CredentialsRepository;
+import com.mongodb.MongoWriteException;
+
+
+//Done By Nakul G Nair
 
 @RestController
 @CrossOrigin("*")
@@ -40,10 +44,20 @@ public class HomeController {
 
 	@PostMapping(path = "/register", consumes = { MediaType.APPLICATION_JSON_VALUE })
 	public boolean registerAccount(@RequestBody @Valid Credentials account) {
-		account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
-		accountCredentialsRepository.save(account);
+		
+		try {
+			account.setPassword(bCryptPasswordEncoder.encode(account.getPassword()));
+			accountCredentialsRepository.save(account);
+			return true;
+			
+		}
+		catch(Exception e)
+		{
+			return false;
+		}
+		
 
-		return true;
+		
 	}
 
 	@PostMapping(path = "/forgotpassword", consumes = { MediaType.APPLICATION_JSON_VALUE })
