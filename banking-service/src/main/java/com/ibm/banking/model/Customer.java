@@ -19,11 +19,12 @@ public class Customer {
 	private Date accountStartingDate;
 	private double bankBalance;
 	private ArrayList<Transaction> transaction;
+	private Nominee nominee;
 	
 	
 	
 	public Customer(String accountNo, String cName, String username, String cEmail, String cPhone,
-			Date accountStartingDate, double bankBalance, ArrayList<Transaction> transaction) {
+			Date accountStartingDate, double bankBalance, ArrayList<Transaction> transaction, Nominee nominee) {
 		super();
 		this.accountNo = accountNo;
 		this.cName = cName;
@@ -33,6 +34,19 @@ public class Customer {
 		this.accountStartingDate = accountStartingDate;
 		this.bankBalance = bankBalance;
 		this.transaction = transaction;
+		this.nominee = nominee;
+	}
+
+
+
+	public Nominee getNominee() {
+		return nominee;
+	}
+
+
+
+	public void setNominee(Nominee nominee) {
+		this.nominee = nominee;
 	}
 
 
