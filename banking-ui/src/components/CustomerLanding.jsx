@@ -172,9 +172,14 @@ class CustomerLanding extends React.Component {
       })
     }
     if (name === "nominee") {
-      this.setState({
-        currentView: "nominee"
-      })
+      if (this.state.user.nominee != null) {
+        this.setState({
+          currentView: "nominee"
+        })
+      }
+      else {
+        alert("No nominees exist!")
+      }
     }
   }
   render() {
