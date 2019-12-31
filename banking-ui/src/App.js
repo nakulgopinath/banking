@@ -11,6 +11,7 @@ import customerRegistration from "./components/CustomerRegistration";
 import TransactionComponent from "./components/TransactionComponent";
 import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
+import CustomerEdit from "./components/CustomerEdit";
 //Done by Hari Govind
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
       />
       <Route path="/forgotpassword" exact component={ForgotPassword} />
       <Route path="/resetpassword" exact component={ResetPassword} />
+      <Route path="/editdetails" exact component={CustomerEdit} />
       <Footer />
     </Router>
   );

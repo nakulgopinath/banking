@@ -17,22 +17,16 @@ class TransactionComponent extends React.Component {
       senderAvailableBalance: "",
       recieverAccNo: "",
       amount: "",
-      transactionList:[],
+      transactionList: [],
 
-      recieverAccNoError:"",
-      amountError:""
+      recieverAccNoError: "",
+      amountError: ""
     };
 
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    
-    this.handleTransactionHistory=this.handleTransactionHistory.bind(this);
-  }
 
-  componentWillReceiveProps(){
-    //   if(this.props===null)
-    //   {return this.props.onHandleTransaction}
-    console.log(this.props)
+    this.handleTransactionHistory = this.handleTransactionHistory.bind(this);
   }
 
   handleChange(event) {
@@ -47,104 +41,100 @@ class TransactionComponent extends React.Component {
 
   validateForm = () => {
     //Validation Done By Nakul G Nair
-        let error=true;
+    let error = true;
 
-        
-  
-        if(!this.state.recieverAccNo)
-        {
-          this.setState({recieverAccNoError:"Reciever Account No  is required"})
-          error=true;
-        }
-        else
-        {
-          this.setState({cNameError:""})
-          error=false;
-        }
 
-        if(!this.state.amount)
-        {
-          this.setState({amountError:"Reciever Account No  is required"})
-          error=true;
-        }
-        else
-        {
-          this.setState({cNameError:""})
-          error=false;
-        }
-        
-   if (error === true)
-   return false;
-   else
-   return true;
 
-      }
+    if (!this.state.recieverAccNo) {
+      this.setState({ recieverAccNoError: "Reciever Account No  is required" })
+      error = true;
+    }
+    else {
+      this.setState({ cNameError: "" })
+      error = false;
+    }
 
-      handleTransactionHistory(evt){
-        // evt.preventDefault();
-        console.log("inside handle transaction history handler");
-        console.log(this.state.transaction.senderAccNo);
-        const url = "http://localhost:8080/customers/transactions?sTid="+this.state.transaction.senderAccNo;
-        axios
-          .get(url)
-          .then(response => {
-            if (response.status === 200) {
-              console.log(response);
-              const accountDetails=response.data.map( item =>
-                <TransactionHistoryComponent
-                
-                res={item} key={item.transactionId}
-                
-                />
-              )
-              this.setState({
-                transactionList: accountDetails,
-              })
-            
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-    
-      }
+    if (!this.state.amount) {
+      this.setState({ amountError: "Reciever Account No  is required" })
+      error = true;
+    }
+    else {
+      this.setState({ cNameError: "" })
+      error = false;
+    }
 
-  handleClick(evt) {
-    evt.preventDefault();
+    if (error === true)
+      return false;
+    else
+      return true;
 
-    const isValid =this.validateForm();
+  }
 
-    if(isValid===true)
-    {
-
-    console.log("inside handle click");
-    this.state.transaction.recieverAccNo = this.state.recieverAccNo;
-    this.state.transaction.amount = this.state.amount;
-    const url = "http://localhost:8080/customers/transactions";
+  handleTransactionHistory(evt) {
+    // evt.preventDefault();
+    console.log("inside handle transaction history handler");
+    console.log(this.state.transaction.senderAccNo);
+    const url = "http://localhost:8080/customers/transactions?sTid=" + this.state.transaction.senderAccNo;
     axios
-      .post(url, this.state.transaction)
+      .get(url)
       .then(response => {
         if (response.status === 200) {
-          console.log("success");
+          console.log(response);
+          const accountDetails = response.data.map(item =>
+            <TransactionHistoryComponent
+
+              res={item} key={item.transactionId}
+
+            />
+          )
           this.setState({
-            success: true
-          });
-          // this.handleSuccessRedirect();
+            transactionList: accountDetails,
+          })
+
         }
       })
       .catch(error => {
         console.log(error);
       });
+
   }
-}
+
+  handleClick(evt) {
+    evt.preventDefault();
+
+    const isValid = this.validateForm();
+
+    if (isValid === true) {
+
+      console.log("inside handle click");
+      this.state.transaction.recieverAccNo = this.state.recieverAccNo;
+      this.state.transaction.amount = this.state.amount;
+      const url = "http://localhost:8080/customers/transactions";
+      axios
+        .post(url, this.state.transaction)
+        .then(response => {
+          if (response.status === 200) {
+            console.log("success");
+            this.setState({
+              success: true
+            });
+            // this.handleSuccessRedirect();
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
 
   render() {
     return (
       <React.Fragment>
         <div className="card text-center">
           <div className="card-header">
-            <h1>Fund Transfer</h1>
-            <hr></hr>
+            <h2>Fund Transfer</h2>
+          </div>
+          <div className="card-body">
             <h4>Account No.</h4>
             <input
               type="text"
@@ -182,7 +172,7 @@ class TransactionComponent extends React.Component {
                 onChange={this.handleChange}
               />
               <div style={{ fontSize: 12, color: "red" }}>
-                 {this.state.recieverAccNoError}
+                {this.state.recieverAccNoError}
               </div>
 
               <h4>Amount</h4>
@@ -194,22 +184,24 @@ class TransactionComponent extends React.Component {
                 onChange={this.handleChange}
               />
               <div style={{ fontSize: 12, color: "red" }}>
-                 {this.state.amountError}
+                {this.state.amountError}
               </div>
               <br></br>
-              <br></br>
-              {/* <br></br> */}
               <button className="btn btn-primary" onClick={this.handleClick}>
                 Transfer
               </button>
             </form>
-            {/* <br /> */}
+            <br />
             <button className="btn btn-primary" onClick={this.handleTransactionHistory}>Transaction History</button>
+            <br />
+            <br />
+            <button className="btn btn-secondary" name="profile" onClick={this.props.onHandleCancel}>Back</button>
+            <br />
           </div>
-            {this.state.transactionList}
-            <br />
-            <br />
-            <br />
+          {this.state.transactionList}
+          <br />
+          <br />
+          <br />
         </div>
       </React.Fragment>
     );
