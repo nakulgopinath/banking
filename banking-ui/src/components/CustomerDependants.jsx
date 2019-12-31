@@ -48,8 +48,21 @@ class CustomerDependants extends React.Component {
 
     render() {
         let emptyNominee;
-        if (this.props.details.nominee != null) { emptyNominee = false }
-        else { emptyNominee = true }
+        let nomineeName;
+        let nomineeRelation;
+        let nomineePhone;
+        if (this.props.details.nominee != null) {
+            emptyNominee = false;
+            nomineeName = this.props.details.user.nominee.name;
+            nomineeRelation = this.props.details.user.nominee.relation;
+            nomineePhone = this.props.details.user.nominee.phone
+        }
+        else {
+            emptyNominee = true;
+            nomineeName = "";
+            nomineeRelation = "";
+            nomineePhone = "";
+        }
         return (<React.Fragment>
             <div className="card text-center">
                 <div className="card-header">
@@ -61,7 +74,7 @@ class CustomerDependants extends React.Component {
                         <input
                             type="text"
                             name="name"
-                            placeholder={emptyNominee ? "Enter Relation to client" : this.props.details.user.nominee.name}
+                            placeholder={emptyNominee ? "Enter Relation to client" : nomineeName}
                             value={this.state.name || ''}
                             onChange={this.handleChange}
                         />
@@ -71,7 +84,7 @@ class CustomerDependants extends React.Component {
                         <input
                             type="text"
                             name="relation"
-                            placeholder={emptyNominee ? "Enter Relation to client" : this.props.details.user.nominee.relation}
+                            placeholder={emptyNominee ? "Enter Relation to client" : nomineeRelation}
                             value={this.state.relation || ''}
                             onChange={this.handleChange}
                         />
@@ -81,7 +94,7 @@ class CustomerDependants extends React.Component {
                         <input
                             type="number"
                             name="phone"
-                            placeholder={emptyNominee ? "Enter Relation to client" : this.props.details.user.nominee.phone}
+                            placeholder={emptyNominee ? "Enter Relation to client" : nomineePhone}
                             value={this.state.phone || ''}
                             onChange={this.handleChange}
                         />
